@@ -139,8 +139,10 @@ _./CovidSpain/index.ts_
 # Drawing the circles
 
 Our next step is draw different pins in each community based on its location and scale the pin radius based on its affected number. In addition to this
-we are also drawing each circle according to a scale of colours representing the number of infected people. Similarly to the problem we have when
-updating the map, we also need to update the circles when the button is clicked. The same explanatory window will also be displayed.
+we are also drawing each circle according to a scale of colours representing the number of infected people. 
+
+The first step is to defined how the circles will be coloured, calculate a proportional value for the radius based on 
+the maximum number of infections
 
 _./CovidSpain/index.ts_
 ```
@@ -157,6 +159,28 @@ const circleFill = d3
     "#ff525c",
     "#EE0E0E",   
   ]);
+ // Calculating the maximum number of infections
+ const maxAffected = covidCasesMarch2020.reduce(
+  (max, item) => (item.value > max ? item.value : max),
+  0
+);
+// calculating the radii based on the number of infections
+const affectedRadiusScale = d3
+  .scaleThreshold<number, number>()
+  .domain([20, 50, 200, 5000, 50000, 700000])
+  .range([5, 10, 15, 20, 30, 40, 50]);
+
+const calculateRadiusBasedOnAffectedCases = (
+  comunidad: string,
+  data: ResultEntry[]
+) => {
+  const entry = data.find((item) => item.name === comunidad);
+  return entry ? affectedRadiusScale(entry.value) : 0;
+};
+```
+Similarly to the problem we have when updating the map, we also need to update the circles when the button is clicked. 
+The same explanatory window will also be displayed:
+```
 
 // Updating the circles
 const updateCircleMap = (data: ResultEntry[]) => {

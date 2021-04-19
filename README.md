@@ -1,4 +1,4 @@
-### Evolution of COVID-19 in Spain
+# Evolution of COVID-19 in Spain
 
 Our target is to graphically display a map of Spain to represent COVID-19 cases among the different communities.
 Two different maps are shown to obtain a visualization about the evolution on the pandemic.
@@ -16,10 +16,10 @@ Format: ![Alt Text](https://gph.is/g/4wYpBvw)
 
 ## Steps
 
-# Creating the buttons
+### Creating the buttons
 The first step is to create the buttons that will be used to choose which data is displayed. For this purpose,
-we need to change the file _./src/index.html_ to include them as follows:
- _./src/index.html_
+we need to change the file _./CovidSpain/index.html_ to include them as follows:
+ _./CovidSpain/index.html_
  ```
  <html>
   <head>
@@ -37,14 +37,14 @@ we need to change the file _./src/index.html_ to include them as follows:
 </html>
  ```
 
-# Loading the data
+### Loading the data
 
 A topojson containing the information of spain is used: https://github.com/deldersveld/topojson/blob/master/countries/spain/spain-comunidad-with-canary-islands.json
 
-We copy it into the route, so that we can import it in the script _./src/spain.json_. Since we deal with the problem that the canary islands,
+We copy it into the route, so that we can import it in the script _./CovidSpain/spain.json_. Since we deal with the problem that the canary islands,
 lands outsidethe map, we use a project created by Roger Veciana that implements a lot of projections for several maps (https://github.com/rveciana/d3-composite-projections)
 
-_./src/index.ts_
+_./CovidSpain/index.ts_
 ```
 import * as d3 from "d3";
 import { on } from "node:events";
@@ -60,11 +60,11 @@ import { latLongCommunities } from "./communities";
 import { stat } from "node:fs";
 ```
 
-# Building and updating the map
+#### Building and updating the map
 
 The standard form of building the map of Spain is:
 
-_./src/index.ts_
+_./CovidSpain/index.ts_
 ```
 const geoPath = d3.geoPath().projection(aProjection);
 
@@ -87,7 +87,7 @@ Finally, we want to emphasize when the mouse is over a specific community. There
 be lighted. In addition an explanatory window will pop containing the information about the community name and number of
 infections.
 
-_./src/index.ts_
+_./CovidSpain/index.ts_
 
 ```
 // Community colouring
@@ -142,7 +142,7 @@ Our next step is draw different pins in each community based on its location and
 we are also drawing each circle according to a scale of colours representing the number of infected people. Similarly to the problem we have when
 updating the map, we also need to update the circles when the button is clicked. The same explanatory window will also be displayed.
 
-_./src/index.ts_
+_./CovidSpain/index.ts_
 ```
 // Scale of colours for the circles
 const circleFill = d3
@@ -199,7 +199,7 @@ variable that will be linked to the button call. This will have the effect of mo
 in used.
 
 
-_./src/index.ts_
+_./CovidSpain/index.ts_
 ```
 const updateMap = (data:ResultEntry[]) => {
   updateMapFill(data);
@@ -208,6 +208,7 @@ const updateMap = (data:ResultEntry[]) => {
 ```
 Finally, we established the action of changing the appropiate data when the buttons are clicked.
 
+_./CovidSpain/index.ts_
 ```
 document
   .getElementById("March2021")
@@ -223,7 +224,34 @@ document
     updateMap(covidCasesApril2021);
   });
 ```
-All the files needed to execute the project and obtain a similar map to the one show in the top of the page are located in 
+All the files needed to execute the project and obtain a similar map to the one show in the top of the page are located in _./CovidSpain/.
+
+## Playing tricks with map
+
+An alternative version of the solution is also added to illustrate how easy lying with data can be. In this example, instead of showing the
+circles based on the number of total cases, we are going to set the circle up to a maximum and draw the remaining ones upon it. This shows that
+regardless of the number of cases, the autonomous community with thw highest number of infections will have the same radius. This can lead to a 
+misrepresentation of the actual data. That's why a figure should be interpreted correctly.
+
+In this case, we change the way we are drawing the pins. By modifying how we calculate the radius, have the effect of establishing a maximum for the radius
+and calculate the rest based on this initial value:
+
+./CovidSpain/CovidSpain(V2).ts_
+
+```
+  const calculateRadiusBasedOnAffectedCases = (comunidad: string, data: ResultEntry[]) => {
+
+    const entry = data.find((item) => item.name === comunidad);
+    console.log(entry)
+    var max = data[0].value
+    for(var i = 0; i < data.length; i++){
+      if(max<data[i].value){
+        max = data[i].value
+      }
+    }
+    return entry ? (entry.value/max)*50 : 0;
+  };
+
 
 
 

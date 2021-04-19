@@ -10,4 +10,6 @@ Each map will be charactirised for the following characteristics:
   * Each autonomous community is coloured differently accordingly to the amount of infections.
   * When the mouse is over a region, it will emphazise the former and display a window of information.
 
-<iframe src="https://giphy.com/embed/P7fFTYADuCpkdgh3jK" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/P7fFTYADuCpkdgh3jK">via GIPHY</a></p>
+At the end, we obtain this result:
+
+![Alt Text](https://giphy.com/embed/P7fFTYADuCpkdgh3jK "Final Result")

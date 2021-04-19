@@ -12,4 +12,4 @@ Each map will be charactirised for the following characteristics:
 
 At the end, we obtain this result:
 
-![](https://giphy.com/embed/P7fFTYADuCpkdgh3jK "Final Result")
+Format: ![Alt Text](https://gph.is/g/4wYpBvw)

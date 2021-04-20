@@ -12,7 +12,7 @@ Each map will be charactirised for the following characteristics:
 
 At the end, we obtain this result:
 
-Format: ![Alt Text](https://gph.is/g/4wYpBvw)
+![]https://media.giphy.com/media/YECaznjVBskSPtj9Jd/giphy.gif)
 
 ## Steps
 

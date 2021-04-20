@@ -12,7 +12,7 @@ Each map will be charactirised for the following characteristics:
 
 At the end, we obtain this result:
 
-![]https://media.giphy.com/media/YECaznjVBskSPtj9Jd/giphy.gif)
+![]https://media.giphy.com/media/YECaznjVBskSPtj9Jd/giphy.gif | width=100)
 
 ## Steps
 

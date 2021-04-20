@@ -24,19 +24,22 @@ const color = d3
     "#540000",
   ]);
 
+const maxAffected = covidCasesMarch2020.reduce(
+  (max, item) => (item.value > max ? item.value : max),
+  0
+);
+
+const affectedRadiusScale = d3
+  .scaleThreshold<number, number>()
+  .domain([20, 50, 200, 5000, 50000, 700000])
+  .range([5, 10, 15, 20, 30, 40, 50]);
+
 const calculateRadiusBasedOnAffectedCases = (
   comunidad: string,
   data: ResultEntry[]
 ) => {
   const entry = data.find((item) => item.name === comunidad);
-  console.log(entry);
-  var max = data[0].value;
-  for (var i = 0; i < data.length; i++) {
-    if (max < data[i].value) {
-      max = data[i].value;
-    }
-  }
-  return entry ? (entry.value / max) * 50 : 0;
+  return entry ? affectedRadiusScale(entry.value) : 0;
 };
 
 const obtainAffectedCases = (comunidad: string, data: ResultEntry[]) => {
@@ -86,21 +89,21 @@ const updateMap = (data: ResultEntry[]) => {
     .attr("r", (d) => calculateRadiusBasedOnAffectedCases(d.name, data))
     .attr("cx", (d) => aProjection([d.long, d.lat])[0])
     .attr("cy", (d) => aProjection([d.long, d.lat])[1])
-  .on("mouseover", function (e: any, datum: any) {
-    d3.select(this).attr("transform", "");
-    const CCAA = datum.name;
-    const cases = obtainAffectedCases(CCAA, data);
-    const coords = { x: e.x, y: e.y };
-    div.transition().duration(200).style("opacity", 0.9);
-    div
-      .html(`<span>${CCAA}: ${cases}</span>`)
-      .style("left", `${coords.x}px`)
-      .style("top", `${coords.y - 28}px`);
-  })
-  .on("mouseout", function (datum) {
-    d3.select(this).attr("transform", "");
-    div.transition().duration(500).style("opacity", 0);
-  })
+    .on("mouseover", function (e: any, datum: any) {
+      d3.select(this).attr("transform", "");
+      const CCAA = datum.name;
+      const cases = obtainAffectedCases(CCAA, data);
+      const coords = { x: e.x, y: e.y };
+      div.transition().duration(200).style("opacity", 0.9);
+      div
+        .html(`<span>${CCAA}: ${cases}</span>`)
+        .style("left", `${coords.x}px`)
+        .style("top", `${coords.y - 28}px`);
+    })
+    .on("mouseout", function (datum) {
+      d3.select(this).attr("transform", "");
+      div.transition().duration(500).style("opacity", 0);
+    });
 };
 
 document

@@ -276,7 +276,7 @@ and calculate the rest based on this initial value:
     return entry ? (entry.value/max)*50 : 0;
   };
 ```
-The full code of this alternative can be obtained from ./CovidSpain/CovidSpain(V2).ts_. It uses the same data, so if you want to try it out by yourself just rename it to index.ts.
+The full code of this alternative can be obtained from ./CovidSpain/CovidSpain(V2).ts_. It uses the same data, so if you want to try it out by yourself just rename it to index.ts and change the file ./CovidSpain/mapBasic.css to /CovidSpain/map.css
 
 # Basic Solution
 

@@ -12,7 +12,7 @@ Each map will be charactirised for the following characteristics:
 
 At the end, we obtain this result:
 
-![alt text](https://media.giphy.com/media/PGQ40L0TRvhPnHy3Wm/giphy.gif)
+![alt text](https://media.giphy.com/media/D8DEiSTyf9og8XBMko/giphy.gif)
 
 ## Steps
 
@@ -277,5 +277,13 @@ and calculate the rest based on this initial value:
   };
 ```
 The full code of this alternative can be obtained from ./CovidSpain/CovidSpain(V2).ts_. It uses the same data, so if you want to try it out by yourself just rename it to index.ts.
+
+# Basic Solution
+
+The initial problem was to create the map of Spain with two buttons and then it shows pins according to the affected infections in the region.
+This solution can be referenced in _./src/basicCovid.ts. This is a simplier version of the results explained above. The visualization should look something like this:
+
+![alt text](https://media.giphy.com/media/GvJ20rajEuNUUbEFM6/giphy.gif)
+
 
 
